@@ -8,6 +8,10 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.Encrypt;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.apache.pdfbox.pdmodel.common.PDMetadata;
 
 /**
  * Hello world!
@@ -36,6 +40,21 @@ public class App
 	        	// ファイルをローカルにコピーする
 				FileUtils.copyFileToDirectory(origFile, tempDir);
 
+				// ファイルのプロパティ削除
+				PDDocument document = PDDocument.load(tempFilename);
+				PDDocumentInformation info = document.getDocumentInformation();
+				info.setAuthor("");
+				info.setCreator("");
+				info.setKeywords("");
+				info.setProducer("");
+				info.setSubject("");
+				info.setTitle("");
+				// ファイルの見開き設定を変更(見開き、表紙を別にする)
+				PDDocumentCatalog catalog = document.getDocumentCatalog();
+				catalog.setPageLayout(PDDocumentCatalog.PAGE_LAYOUT_TWO_PAGE_RIGHT);
+				document.save(tempFilename);
+				document.close();
+
 		    	// ローカルファイルを保護設定
 				List<String> argList = new ArrayList<String>();
 				argList.add("-canPrint");
@@ -59,14 +78,13 @@ public class App
 				argList.add("-O");
 				argList.add("z0625in");
 				argList.add(tempFilename);
-				
 				String[] arg = (String[]) argList.toArray(new String[argList.size()]);
-				
 				Encrypt.main(arg);
 				
 		    	// ローカルファイルをサーバにアップする
 				FileUtils.copyFileToDirectory(tempFile, origDir);
 			} catch (Exception e) {
+				e.printStackTrace();
 				String fullPath = FilenameUtils.getFullPath(origFilename);
 				String fileName = "エラー：" + FilenameUtils.getBaseName(origFilename) + ".txt";
 				try {
