@@ -4,7 +4,7 @@
   <groupId>jp.co.insource</groupId>
   <artifactId>pdf-encryptor</artifactId>
   <name>pdf-encryptor</name>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>
@@ -78,6 +78,27 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.5.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>C:/Program Files (x86)/Inno Setup 5/ISCC.exe</executable>
+          <workingDirectory>.</workingDirectory>
+          <arguments>
+            <argument>/O./target</argument>
+            <argument>src/config/InnoSetup/pdf-encryptor-user.iss</argument>
+          </arguments>
+        </configuration>
       </plugin>
     </plugins>
   </build>

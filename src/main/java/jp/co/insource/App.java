@@ -2,12 +2,9 @@ package jp.co.insource;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.pdfbox.Encrypt;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
@@ -57,56 +54,23 @@ public class App
 				AccessPermission ap = new AccessPermission();
 
 		    	// ローカルファイルを保護設定
-				//List<String> argList = new ArrayList<String>();
-				//argList.add("-canPrint");
-				//argList.add("true");
 				ap.setCanPrint(true);
-				
-				//argList.add("-canPrintDegraded");
-				//argList.add("true");
 				ap.setCanPrintDegraded(true);
-				
-				//argList.add("-canAssemble");
-				//argList.add("false");
+				ap.setCanExtractForAccessibility(true);
+
 				ap.setCanAssembleDocument(false);
-				
-				//argList.add("-canExtractContent");
-				//argList.add("false");
 				ap.setCanExtractContent(false);
-				
-				//argList.add("-canExtractForAccessibility");
-				//argList.add("false");
-				ap.setCanExtractForAccessibility(false);
-				
-				//argList.add("-canFillInForm");
-				//argList.add("false");
 				ap.setCanFillInForm(false);
-				
-				//argList.add("-canModify");
-				//argList.add("false");
 				ap.setCanModify(false);
-				
-				//argList.add("-canModifyAnnotations");
-				//argList.add("false");
 				ap.setCanModifyAnnotations(false);
 				
-				//argList.add("-keyLength");
-				//argList.add("128");
-				
-				//argList.add("-O");
-				//argList.add("z0625in");
-				//argList.add(tempFilename);
-				
 				StandardProtectionPolicy spp =
-						new StandardProtectionPolicy(null, "z0625in", ap);
+						new StandardProtectionPolicy("z0625in", null, ap);
 				spp.setEncryptionKeyLength(128);
 				document.protect(spp);
 				
 				document.save(tempFilename);
 				document.close();
-				
-				//String[] arg = (String[]) argList.toArray(new String[argList.size()]);
-				//Encrypt.main(arg);
 				
 		    	// ローカルファイルをサーバにアップする
 				FileUtils.copyFileToDirectory(tempFile, origDir);
