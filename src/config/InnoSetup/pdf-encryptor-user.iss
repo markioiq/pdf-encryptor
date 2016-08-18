@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "PDFï€åÏê›íË"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.1.0"
 #define MyAppPublisher "Masato Kawasaki"
 #define MyAppExeName "pdf-encryptor.exe"
 
@@ -34,7 +34,7 @@ Name: modifypath; Description: "ä¬ã´ïœêî Path Ç…í«â¡Ç∑ÇÈ";
 [Files]
 ;Source: ".\pdf-encryptor.exe"; DestDir: "{app}"; Flags: ignoreversion
 ;Source: ".\jre\*"; DestDir: "{app}/jre"; Flags: ignoreversion recursesubdirs createallsubdirsSource: "..\..\..\target\pdf-encryptor.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Program Files\Java\jdk1.8.0_51\jre\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Program Files\Java\jdk1.8.0_51\jre\*"; DestDir: "{app}/jre"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
